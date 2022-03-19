@@ -203,7 +203,7 @@ class Test_HARMONY_MultiCall(AbstractBase.BaseMultiCall):
                 [
                     self.get_with_params_call()
                 ]
-            , _w3 = _w3, block_id=23535176)
+            , _w3 = _w3, block_id=23535176) # 2022/03/01
             resp = multi()
             assert resp[self.RQST_PARAM] is not None
             assert resp[self.RQST_PARAM] >= 0
@@ -219,7 +219,7 @@ class Test_HARMONY_MultiCall(AbstractBase.BaseMultiCall):
                 [
                     self.get_with_params_call()
                 ]
-            , _w3 = _w3, block_id=21185623)
+            , _w3 = _w3, block_id=21185623) # 2022/01/01
             resp = multi()
             assert resp[self.RQST_PARAM] is not None
             assert resp[self.RQST_PARAM] >= 0
