@@ -195,3 +195,35 @@ class Test_HARMONY_MultiCall(AbstractBase.BaseMultiCall):
         cls.CONTRACT = "0x21d100a1792ea39b1b172371d4076f7e3a63d159"
         cls.RQST_PARAM = "0xbf8f337b1863dee5e251358834dbecdeafb64ce2"
         cls.contract_interface = 'owedPayment(address)(uint256)'
+    
+    def test_look_back_a_bit(self):
+        if self.CONTRACT is not None:
+            _w3 = self.get_w3()
+            multi = Multicall(
+                [
+                    self.get_with_params_call()
+                ]
+            , _w3 = _w3, block_id=23535176)
+            resp = multi()
+            assert resp[self.RQST_PARAM] is not None
+            assert resp[self.RQST_PARAM] >= 0
+            assert multi.get_last_calls_block_id() is not None
+            assert isinstance(multi.get_last_calls_block_id(),int)
+        else:
+            print(">> CONTRACT is not set")
+    
+    def test_look_back_a_far(self):
+        if self.CONTRACT is not None:
+            _w3 = self.get_w3()
+            multi = Multicall(
+                [
+                    self.get_with_params_call()
+                ]
+            , _w3 = _w3, block_id=21185623)
+            resp = multi()
+            assert resp[self.RQST_PARAM] is not None
+            assert resp[self.RQST_PARAM] >= 0
+            assert multi.get_last_calls_block_id() is not None
+            assert isinstance(multi.get_last_calls_block_id(),int)
+        else:
+            print(">> CONTRACT is not set")
