@@ -125,6 +125,39 @@ class Test_BSC_MultiCall(AbstractBase.BaseMultiCall):
         cls.CONTRACT = "0x000f46946d47647c04A5f10269e9084FB8c8637A"
         cls.contract_interface = 'owedPayment(address)(uint256)'
 
+    def test_look_back_a_bit_small_batch(self):
+        if self.CONTRACT is not None:
+            _w3 = self.get_w3()
+            multi = Multicall(
+                [
+                    self.get_with_params_call()
+                ]
+            , _w3 = _w3, block_id=16076377) # 2022/03/15
+            resp = multi()
+            assert resp[self.RQST_PARAM] is not None
+            assert resp[self.RQST_PARAM] >= 0
+            assert multi.get_last_calls_block_id() is not None
+            assert isinstance(multi.get_last_calls_block_id(),int)
+        else:
+            print(">> CONTRACT is not set")
+    
+    def test_look_back_a_bit_big_batch(self):
+        if self.CONTRACT is not None:
+            _w3 = self.get_w3()
+            multi = Multicall(
+                [
+                    self.get_with_params_call()
+                ]*5000
+            , _w3 = _w3, block_id=16076377) # 2022/03/15
+            resp = multi()
+            assert resp[self.RQST_PARAM] is not None
+            assert resp[self.RQST_PARAM] >= 0
+            assert multi.get_last_calls_block_id() is not None
+            assert isinstance(multi.get_last_calls_block_id(),int)
+        else:
+            print(">> CONTRACT is not set")
+    
+
 class Test_ETHEREUM_MultiCall(AbstractBase.BaseMultiCall):
     @classmethod
     def setUpClass(cls):
