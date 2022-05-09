@@ -23,6 +23,7 @@ class Network(IntEnum):
     Arbitrum = 42161
     Avax = 43114
     Moonriver = 1285
+    Moonbeam = 1284
     Aurora = 1313161554
     Optimism = 10
 
@@ -49,6 +50,7 @@ MULTICALL2_ADDRESSES = {
     Network.Polygon: '0xc8E51042792d7405184DfCa245F2d27B94D013b6',
     Network.Bsc: '0xfF6FD90A470Aaa0c1B8A54681746b07AcdFedc9B',  
     Network.Fantom: '0xBAD2B082e2212DE4B065F636CA4e5e0717623d18',
+    Network.Moonbeam: '0x83e3b61886770de2F64AAcaD2724ED4f08F7f36B',
     Network.Moonriver: '0xe05349d6fE12602F6084550995B247a5C80C0E2C', # 0xB44a9B6905aF7c801311e8F4E76932ee959c663C, 0x55f46144bC62e9Af4bAdB71842B62162e2194E90, 0xe05349d6fE12602F6084550995B247a5C80C0E2C, 0x814C1C56815D52b58d7254424c15307e7363E016
     Network.Arbitrum: '0x842eC2c7D803033Edf55E478F461FC547Bc54EB2',
     Network.Avax: '0xdf2122931FEb939FB8Cf4e67Ea752D1125e18858',
@@ -67,6 +69,7 @@ CHAIN_HARMONY = "HARMONY"
 CHAIN_HECO = "HECO"
 CHAIN_MATIC = "MATIC"
 CHAIN_POLYGON = "POLYGON"
+CHAIN_MOONBEAM = "MOONBEAM"
 CHAIN_MOONRIVER = "MOONRIVER"
 CHAIN_OPTIMISM = "OPTIMISM"
 CHAIN_XDAI = "XDAI"
@@ -82,6 +85,7 @@ PUBLIC_RPC_ENDPOINT_MAP = {
   CHAIN_HECO:"https://http-mainnet.hecochain.com",
   CHAIN_MATIC:"https://polygon-rpc.com",
   CHAIN_POLYGON:"https://polygon-rpc.com",
+  CHAIN_MOONBEAM:"",
   CHAIN_MOONRIVER:"https://rpc.moonriver.moonbeam.network",
   CHAIN_OPTIMISM:"https://mainnet.optimism.io/",
   CHAIN_XDAI:"https://rpc.xdaichain.com",

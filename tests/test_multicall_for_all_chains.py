@@ -21,6 +21,7 @@ from multicall.constants import (
     CHAIN_MOONRIVER,
     CHAIN_OPTIMISM,
     CHAIN_XDAI,
+    CHAIN_MOONBEAM,
     PUBLIC_RPC_ENDPOINT_MAP,
 )
 
@@ -150,6 +151,15 @@ class Test_HECO_MultiCall(AbstractBase.BaseMultiCall):
         cls.CHAIN = CHAIN_HECO
         cls.CONTRACT = "0x0AF7cEb1D2f3F5ceC626aEe32fF89EB15D40C586"
         cls.RQST_PARAM = "0x071FE390b362b866257c739C402f1e33FACC6181"
+
+class Test_MOONBEAM_MultiCall(AbstractBase.BaseMultiCall):
+    @classmethod
+    def setUpClass(cls):
+        super(Test_MOONBEAM_MultiCall, cls).setUpClass()
+        cls.CHAIN = CHAIN_MOONBEAM
+        cls.CONTRACT = ""
+        cls.RQST_PARAM = ""
+        cls.contract_interface = 'owedPayment(address)(uint256)'
 
 class Test_MOONRIVER_MultiCall(AbstractBase.BaseMultiCall):
     @classmethod
