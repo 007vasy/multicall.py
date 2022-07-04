@@ -22,6 +22,7 @@ class Network(IntEnum):
     Harmony = 1666600000
     Arbitrum = 42161
     Avax = 43114
+    Metis = 1088
     Moonriver = 1285
     Moonbeam = 1284
     Aurora = 1313161554
@@ -56,6 +57,7 @@ MULTICALL2_ADDRESSES = {
     Network.Avax: '0xdf2122931FEb939FB8Cf4e67Ea752D1125e18858',
     Network.Heco: '0xd1F3BE686D64e1EA33fcF64980b65847aA43D79C',
     Network.Aurora: '0xe0e3887b158F7F9c80c835a61ED809389BC08d1b',
+    Network.Metis: '0x18fA376d92511Dd04090566AB6144847c03557d8'
 }
 
 
@@ -69,10 +71,13 @@ CHAIN_HARMONY = "HARMONY"
 CHAIN_HECO = "HECO"
 CHAIN_MATIC = "MATIC"
 CHAIN_POLYGON = "POLYGON"
+CHAIN_METIS = "METIS"
 CHAIN_MOONBEAM = "MOONBEAM"
 CHAIN_MOONRIVER = "MOONRIVER"
 CHAIN_OPTIMISM = "OPTIMISM"
 CHAIN_XDAI = "XDAI"
+
+# https://chainlist.org/
 
 PUBLIC_RPC_ENDPOINT_MAP = {
   CHAIN_ARBITRUM:"https://rpc.ankr.com/arbitrum",
@@ -85,9 +90,10 @@ PUBLIC_RPC_ENDPOINT_MAP = {
   CHAIN_HECO:"https://http-mainnet.hecochain.com",
   CHAIN_MATIC:"https://polygon-rpc.com",
   CHAIN_POLYGON:"https://polygon-rpc.com",
-  CHAIN_MOONBEAM:"",
+  CHAIN_METIS:"https://andromeda.metis.io/?owner=1088",
+  CHAIN_MOONBEAM:"https://rpc.api.moonbeam.network",
   CHAIN_MOONRIVER:"https://rpc.moonriver.moonbeam.network",
   CHAIN_OPTIMISM:"https://mainnet.optimism.io/",
-  CHAIN_XDAI:"https://rpc.xdaichain.com",
+  CHAIN_XDAI:"https://xdai-rpc.gateway.pokt.network",
 }
 
