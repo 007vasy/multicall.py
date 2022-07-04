@@ -159,8 +159,8 @@ class Test_METIS_MultiCall(AbstractBase.BaseMultiCall):
     def setUpClass(cls):
         super(Test_METIS_MultiCall, cls).setUpClass()
         cls.CHAIN = CHAIN_METIS
-        cls.CONTRACT = "0xd4201c0d50c3c9a867bb9a7a1cc6f7f66e41c530"
-        cls.RQST_PARAM = "0xddb760cf92295b43b6c6e99266b19b0b741aca49"
+        cls.CONTRACT = ""
+        cls.RQST_PARAM = ""
         cls.contract_interface = 'owedPayment(address)(uint256)'
 
 class Test_MOONBEAM_MultiCall(AbstractBase.BaseMultiCall):
