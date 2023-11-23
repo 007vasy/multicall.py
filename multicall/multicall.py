@@ -7,7 +7,7 @@ import requests
 from web3 import Web3
 
 from multicall import Call
-from multicall.constants import (GAS_LIMIT, MULTICALL2_ADDRESSES,
+from multicall.constants import (GAS_LIMIT,MULTICALL3_ADDRESSES, MULTICALL3_BYTECODE, MULTICALL2_ADDRESSES,
                                  MULTICALL2_BYTECODE, MULTICALL_ADDRESSES, w3)
 from multicall.loggers import setup_logger
 from multicall.utils import (await_awaitable, chain_id, gather,
@@ -48,7 +48,7 @@ class Multicall:
             multicall_map = MULTICALL_ADDRESSES if self.chainid in MULTICALL_ADDRESSES else MULTICALL2_ADDRESSES
             self.multicall_sig = 'aggregate((address,bytes)[])(uint256,bytes[])'
         else:
-            multicall_map = MULTICALL2_ADDRESSES
+            multicall_map = MULTICALL2_ADDRESSES if self.chainid in MULTICALL2_ADDRESSES else MULTICALL3_ADDRESSES 
             self.multicall_sig = 'tryBlockAndAggregate(bool,(address,bytes)[])(uint256,uint256,(bool,bytes)[])'
         self.multicall_address = multicall_map[self.chainid]
 
