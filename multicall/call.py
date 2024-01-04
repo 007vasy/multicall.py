@@ -58,7 +58,7 @@ class Call:
         returns: Optional[Iterable[Tuple[str,Callable]]] = None,
         success: Optional[bool] = None
     ) -> Any:
-    
+
         if success is None:
             apply_handler = lambda handler, value: handler(value)
         else:
@@ -72,15 +72,20 @@ class Call:
         else:
             decoded = [None] * (1 if not returns else len(returns)) # type: ignore
 
-        logger.debug(f'returns: {returns}')
-        logger.debug(f'decoded: {decoded}')
+        logger.info(f'returns: {returns}')
+        logger.info(f'decoded: {decoded}')
 
         if returns:
-            return {
+            if isinstance(decoded, tuple):
+                decoded = [decoded]
+            logger.info(f'zip(returns, decoded): {str(list(zip(returns, decoded)))}')
+            payload = {
                 name: apply_handler(handler, value) if handler else value
                 for (name, handler), value
-                in zip(returns, decoded)
+                in zip(returns,(decoded))
             }
+            logger.info(f'payload: {payload}')
+            return payload
         else:
             return decoded if len(decoded) > 1 else decoded[0]
 

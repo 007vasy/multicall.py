@@ -225,13 +225,15 @@ def test_multicall_complex_function_output():
         w3_middleware.inject(geth_poa_middleware, layer=0)
 
 
-        block_id = 18932195
+        block_id = 18932295
         
-        multi = Multicall([_call] ,_w3 = w3, block_id=block_id, require_success=False, gas_limit=999_999_999_999)
+        multi = Multicall([_call] ,_w3 = w3, 
+            block_id=block_id, 
+            require_success=False, gas_limit=999_999_999_999)
 
         resp = multi()
 
     except Exception as e:
         print(str(e))
 
-    assert resp[mc_key] == (True, ((7893216111492293007,0,3020729914728570,0,1,0,0), 12238172579452610741))
+    assert resp[mc_key] == (True, ((7898831300446505238,0,3020729914728570,0,1,0,0), 12254818851300487143))
