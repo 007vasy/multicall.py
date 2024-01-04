@@ -134,6 +134,9 @@ def test_multicall_multiprocessing():
     Parallel(4,'multiprocessing')(delayed(Multicall(batch, _w3=web3))() for batch in batcher.batch_calls(calls, batcher.step))
 
 def test_multicall_complex_function_output():
+    from web3 import Web3
+    from web3.middleware import geth_poa_middleware
+    
     chain = "ethereum__mainnet"
     contract = "0x996913c8c08472f584ab8834e925b06d0eb1d813"
     staker_address = "0x06A2DE83a82B354Aa75887E5517655ccfA00a696"
@@ -207,7 +210,20 @@ def test_multicall_complex_function_output():
 
         
     try:
-        w3 = os.environ.get("WEB3_PROVIDER_URI", None)
+        w3_url = os.environ.get("WEB3_PROVIDER_URI", None)
+
+        w3 = Web3(Web3.HTTPProvider(w3_url,request_kwargs={'timeout': 60}))
+
+
+        for block_number_attr_format in [
+                'middleware_onion',
+                'middleware_stack',
+            ]:
+            if hasattr(w3, block_number_attr_format):
+                w3_middleware = getattr(w3, block_number_attr_format)
+
+        w3_middleware.inject(geth_poa_middleware, layer=0)
+
 
         block_id = 18932195
         
