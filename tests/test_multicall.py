@@ -234,4 +234,4 @@ def test_multicall_complex_function_output():
     except Exception as e:
         print(str(e))
 
-    assert resp[mc_key] == ((7786309865110686563,0,3020729914728570,0,1,0,0), 12238172579452610741)
+    assert resp[mc_key] == (True, ((7893216111492293007,0,3020729914728570,0,1,0,0), 12238172579452610741))
