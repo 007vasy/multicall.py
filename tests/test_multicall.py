@@ -1,5 +1,6 @@
 from typing import Any, Tuple
 import pytest
+import os
 
 from brownie import web3
 from joblib import Parallel, delayed
@@ -131,3 +132,90 @@ def test_multicall_multiprocessing():
     web3.provider.request_func(web3, web3.middleware_onion)
     calls = [Call(CHAI, 'totalSupply()(uint)', [[f'totalSupply{i}',None]]) for i in range(50_000)]
     Parallel(4,'multiprocessing')(delayed(Multicall(batch, _w3=web3))() for batch in batcher.batch_calls(calls, batcher.step))
+
+def test_multicall_complex_function_output():
+    chain = "ethereum__mainnet"
+    contract = "0x996913c8c08472f584ab8834e925b06d0eb1d813"
+    staker_address = "0x06A2DE83a82B354Aa75887E5517655ccfA00a696"
+
+    func_abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "staker",
+                "type": "address"
+            }
+        ],
+        "name": "calculateLatestStakerReward",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint112",
+                        "name": "vestedBaseReward",
+                        "type": "uint112"
+                    },
+                    {
+                        "internalType": "uint112",
+                        "name": "vestedDelegatedReward",
+                        "type": "uint112"
+                    },
+                    {
+                        "internalType": "uint112",
+                        "name": "baseRewardPerToken",
+                        "type": "uint112"
+                    },
+                    {
+                        "internalType": "uint112",
+                        "name": "operatorDelegatedRewardPerToken",
+                        "type": "uint112"
+                    },
+                    {
+                        "internalType": "enum IRewardVault.StakerType",
+                        "name": "stakerType",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "uint112",
+                        "name": "claimedBaseRewardsInPeriod",
+                        "type": "uint112"
+                    },
+                    {
+                        "internalType": "uint112",
+                        "name": "unvestedBaseReward",
+                        "type": "uint112"
+                    }
+                ],
+                "internalType": "struct IRewardVault.StakerReward",
+                "name": "",
+                "type": "tuple"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+    function_name = func_abi["name"]
+    mc_key = f'{chain}__{contract}__{function_name}__{staker_address}'
+    mc_sig = 'calculateLatestStakerReward(address)((uint112,uint112,uint112,uint112,uint8,uint112,uint112),uint256)'
+    _call = Call(contract, [mc_sig, staker_address], [[mc_key, unpack_no_success]])
+
+
+        
+    try:
+        w3 = os.environ.get("WEB3_PROVIDER_URI", None)
+
+        block_id = 18932195
+        
+        multi = Multicall([_call] ,_w3 = w3, block_id=block_id, require_success=False, gas_limit=999_999_999_999)
+
+        resp = multi()
+
+    except Exception as e:
+        print(str(e))
+
+    assert resp[mc_key] == ((7786309865110686563,0,3020729914728570,0,1,0,0), 12238172579452610741)
