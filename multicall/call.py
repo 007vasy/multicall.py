@@ -76,8 +76,11 @@ class Call:
         logger.info(f'decoded: {decoded}')
 
         if returns:
-            if isinstance(decoded, tuple):
+            
+            # ! This is a hack to make sure that the decoded output is a tuple and something else
+            if isinstance(decoded, tuple) and len(returns) != len(decoded):
                 decoded = [decoded]
+
             logger.info(f'zip(returns, decoded): {str(list(zip(returns, decoded)))}')
             payload = {
                 name: apply_handler(handler, value) if handler else value
