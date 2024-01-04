@@ -72,8 +72,8 @@ class Call:
         else:
             decoded = [None] * (1 if not returns else len(returns)) # type: ignore
 
-        logger.info(f'returns: {returns}')
-        logger.info(f'decoded: {decoded}')
+        logger.debug(f'returns: {returns}')
+        logger.debug(f'decoded: {decoded}')
 
         if returns:
             
@@ -81,13 +81,12 @@ class Call:
             if isinstance(decoded, tuple) and len(returns) != len(decoded):
                 decoded = [decoded]
 
-            logger.info(f'zip(returns, decoded): {str(list(zip(returns, decoded)))}')
             payload = {
                 name: apply_handler(handler, value) if handler else value
                 for (name, handler), value
                 in zip(returns,(decoded))
             }
-            logger.info(f'payload: {payload}')
+            logger.debug(f'payload: {payload}')
             return payload
         else:
             return decoded if len(decoded) > 1 else decoded[0]
