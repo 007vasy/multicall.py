@@ -29,6 +29,9 @@ def from_ray_require_success(success,val):
 def unpack_no_success(success: bool, output: Any) -> Tuple[bool,Any]:
     return (success, output)
 
+def unpack_success(output: Any) -> Any:
+    return output
+
 
 def test_multicall():
     multi = Multicall([
@@ -237,3 +240,45 @@ def test_multicall_complex_function_output():
         print(str(e))
 
     assert resp[mc_key] == (True, ((7898831300446505238,0,3020729914728570,0,1,0,0), 12254818851300487143))
+
+def test_multicall_polygon_zkevm():
+    from web3 import Web3
+    from web3.middleware import geth_poa_middleware
+
+    # ! using the multicall contract for testing (could be any other contract)
+
+    contract = "0xca11bde05977b3631167028862be2a173976ca11"
+
+    chain = "polygon_zkevm"
+
+    function_name = "getBlockNumber"
+    mc_key = f'{chain}__{contract}__{function_name}'
+    mc_sig = 'getBlockNumber()(uint256)'
+    _call = Call(contract, [mc_sig], [[mc_key, unpack_success]])
+
+
+    resp = {}
+    try:
+        w3_url = os.environ.get("WEB3_PROVIDER_URI", None)
+
+        w3 = Web3(Web3.HTTPProvider(w3_url,request_kwargs={'timeout': 60}))
+
+
+        for block_number_attr_format in [
+                'middleware_onion',
+                'middleware_stack',
+            ]:
+            if hasattr(w3, block_number_attr_format):
+                w3_middleware = getattr(w3, block_number_attr_format)
+
+        w3_middleware.inject(geth_poa_middleware, layer=0)
+        
+        multi = Multicall([_call] ,_w3 = w3, 
+            require_success=True, gas_limit=999_999_999_999)
+
+        resp = multi()
+
+    except Exception as e:
+        print(str(e))
+
+    assert resp.get(mc_key) > 9259198
