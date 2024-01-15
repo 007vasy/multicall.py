@@ -8,7 +8,7 @@ from web3 import Web3
 
 from multicall import Call
 from multicall.constants import (GAS_LIMIT,MULTICALL3_ADDRESSES, MULTICALL3_BYTECODE, MULTICALL2_ADDRESSES,
-                                 MULTICALL2_BYTECODE, MULTICALL_ADDRESSES, w3)
+                                 MULTICALL2_BYTECODE, MULTICALL_ADDRESSES, w3, Network)
 from multicall.loggers import setup_logger
 from multicall.utils import (await_awaitable, chain_id, gather,
                              run_in_subprocess, state_override_supported)
@@ -51,8 +51,11 @@ class Multicall:
                 multicall_map = MULTICALL3_ADDRESSES
             else:
                 multicall_map = MULTICALL_ADDRESSES if self.chainid in MULTICALL_ADDRESSES else MULTICALL2_ADDRESSES
-
-            self.multicall_sig = 'aggregate((address,bytes)[])(uint256,bytes[])'
+            
+            if self.chainid == Network.Polygon_ZkEVM:
+                self.multicall_sig = 'aggregate3((address,bytes)[])(uint256,bytes[])'
+            else:
+                self.multicall_sig = 'aggregate((address,bytes)[])(uint256,bytes[])'
         else:
             multicall_map = MULTICALL2_ADDRESSES if self.chainid in MULTICALL2_ADDRESSES else MULTICALL3_ADDRESSES 
             self.multicall_sig = 'tryBlockAndAggregate(bool,(address,bytes)[])(uint256,uint256,(bool,bytes)[])'
