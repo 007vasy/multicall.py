@@ -48,7 +48,7 @@ class Multicall:
             # add multicall 3 as well
 
             if self.chainid in MULTICALL3_ADDRESSES:
-                multicall_map = MULTICALL3_ADDRESSES[self.chainid]
+                multicall_map = MULTICALL3_ADDRESSES
             else:
                 multicall_map = MULTICALL_ADDRESSES if self.chainid in MULTICALL_ADDRESSES else MULTICALL2_ADDRESSES
 
