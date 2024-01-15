@@ -45,7 +45,13 @@ class Multicall:
         self.w3 = _w3
         self.chainid = chain_id(self.w3)
         if require_success is True:
-            multicall_map = MULTICALL_ADDRESSES if self.chainid in MULTICALL_ADDRESSES else MULTICALL2_ADDRESSES
+            # add multicall 3 as well
+
+            if self.chainid in MULTICALL3_ADDRESSES:
+                multicall_map = MULTICALL3_ADDRESSES[self.chainid]
+            else:
+                multicall_map = MULTICALL_ADDRESSES if self.chainid in MULTICALL_ADDRESSES else MULTICALL2_ADDRESSES
+
             self.multicall_sig = 'aggregate((address,bytes)[])(uint256,bytes[])'
         else:
             multicall_map = MULTICALL2_ADDRESSES if self.chainid in MULTICALL2_ADDRESSES else MULTICALL3_ADDRESSES 
