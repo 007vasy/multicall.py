@@ -75,6 +75,8 @@ class Network(IntEnum):
     Harmony = 1666600000
     Scroll = 534352
     Linea = 59144
+    Base = 8453
+    Polygon_ZkEVM = 1101   
     
 
 MULTICALL_ADDRESSES: Dict[int,str] = {
@@ -114,7 +116,8 @@ MULTICALL2_ADDRESSES: Dict[int,str] = {
     Network.Kava: '0x45be772faE4a9F31401dfF4738E5DC7DD439aC0b',
 }
 
-# based on https://github.com/mds1/multicall#readme
+# based on https://github.com/mds1/multicall#readmen
+# https://github.com/mds1/multicall/blob/main/deployments.json
 MULTICALL3_ADDRESSES: Dict[int,str] = {
     Network.Mainnet: '0xcA11bde05977b3631167028862bE2a173976CA11',
     Network.Ropsten: '0xcA11bde05977b3631167028862bE2a173976CA11',
@@ -168,6 +171,8 @@ MULTICALL3_ADDRESSES: Dict[int,str] = {
     Network.Harmony: '0xcA11bde05977b3631167028862bE2a173976CA11',
     Network.Scroll: '0xcA11bde05977b3631167028862bE2a173976CA11',
     Network.Linea: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    Network.Base: '0xcA11bde05977b3631167028862bE2a173976CA11',
+    Network.Polygon_ZkEVM: '0xcA11bde05977b3631167028862bE2a173976CA11',
 }
 
 # With default AsyncBaseProvider settings, some dense calls will fail
