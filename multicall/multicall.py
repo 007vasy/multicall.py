@@ -52,10 +52,7 @@ class Multicall:
             else:
                 multicall_map = MULTICALL_ADDRESSES if self.chainid in MULTICALL_ADDRESSES else MULTICALL2_ADDRESSES
             
-            if self.chainid == Network.Polygon_ZkEVM:
-                self.multicall_sig = 'aggregate3((address,bytes)[])(uint256,bytes[])'
-            else:
-                self.multicall_sig = 'aggregate((address,bytes)[])(uint256,bytes[])'
+            self.multicall_sig = 'aggregate((address,bytes)[])(uint256,bytes[])'
         else:
             multicall_map = MULTICALL2_ADDRESSES if self.chainid in MULTICALL2_ADDRESSES else MULTICALL3_ADDRESSES 
             self.multicall_sig = 'tryBlockAndAggregate(bool,(address,bytes)[])(uint256,uint256,(bool,bytes)[])'
